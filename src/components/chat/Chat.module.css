@@ -1,0 +1,90 @@
+@import "../../styles/global.css";
+#root {
+  background-color: var(--grey-01);
+}
+.chat {
+  background-color: var(--grey-01);
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+  flex-basis: 0;
+  flex-direction: column;
+  padding: 2rem;
+}
+/* PROMPT */
+
+.prompt {
+  display: flex;
+  padding: 0.5rem;
+  border-radius: 14px;
+  border: solid 2px var(--grey-02);
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+.prompt__attach {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+}
+.prompt__attach--icon {
+}
+/* SUBMIT BUTTON */
+.prompt__input {
+  margin: 0; /* m-0 */
+  width: 100%; /* w-full */
+  resize: none; /* resize-none */
+  border: 0; /* border-0 */
+  background-color: transparent; /* bg-transparent */
+  outline: none; /* focus:ring-0 */
+  /* focus-visible:ring-0 - This removes the ring on focus, but there's no direct CSS property for focus-visible, so you might need to use :focus-visible pseudo-class */
+  background-color: transparent; /* dark:bg-transparent - This is for dark mode, which is the same as the default */
+  color: var(--grey-04); /* placeholder-black/50 */
+  font-family: sans-serif;
+  font-size: 1.1rem;
+  /* dark:placeholder-white/50 - This changes the placeholder color in dark mode */
+  padding-left: 10px; /* pl-10 */
+}
+
+.prompt__input:focus-visible {
+  outline: none; /* focus-visible:ring-0 */
+}
+
+.prompt__input::placeholder {
+  color: var(--grey-04); /* placeholder-black/50 */
+  font-family: sans-serif;
+  font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+  /* md: breakpoint in Tailwind by default is 768px */
+  .prompt__input {
+  }
+}
+
+.submit__icon {
+  color: var(--grey-01);
+  margin: auto;
+}
+
+.submit,
+.submit__disabled {
+  display: flex;
+
+  padding: 0.3rem;
+  border-radius: 8px;
+  /* width: 20px; */
+  /* margin-right: 0.05rem; */
+  appearance: none;
+
+  /* justify-items: center; */
+  /* align-items: center; */
+}
+.submit {
+  background-color: #fff;
+}
+.submit__disabled {
+  background-color: var(--grey-02);
+}

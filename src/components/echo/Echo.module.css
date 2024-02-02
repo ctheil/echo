@@ -1,0 +1,27 @@
+@import "../../styles/global.css";
+.echo {
+  display: flex;
+  flex-direction: column;
+  border: solid 2px var(--grey-02);
+  padding: 0.2rem 0.4rem;
+  margin-bottom: 1rem;
+  border-radius: 14px;
+}
+.echo__heading {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.analyzed {
+  position: relative;
+}
+.analyzed__p {
+  margin: 0;
+}
+.analyzed span {
+  text-decoration: underline;
+  text-decoration-style: solid;
+  color: var(--grey-04);
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+}
