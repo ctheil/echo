@@ -3,18 +3,51 @@ import { IResponse } from "../components/GPT_test";
 
 //const client = OpenAI();
 const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
+console.log(OPENAI_API_KEY);
 
 const openai = new OpenAI({
   apiKey: OPENAI_API_KEY,
   dangerouslyAllowBrowser: true,
 });
+export const submitPrompt = async (input: string): Promise<string> => {
+  const completion = await openai.chat.completions.create({
+    messages: [{ role: "user", content: input }],
+    model: "gpt-3.5-turbo",
+  });
+  return completion.choices[0].message.content as string;
+};
+export const revisePrompt = async (input: string): Promise<string> => {
+  const completion = await openai.chat.completions.create({
+    messages: [
+      {
+        role: "system",
+        content:
+          "You are a very talented prompt engineer who specalizes in engineering prompts for LLMs and ChatGPT. Please revise the provided prompt (which is formatted in JSON) and improve it based on the attached clarifications. The JSON is structured so that the original string of the prompt is the key of the object, and the value is the clarification. Your response should take the form of standard plain text as the revised prompt ready to be inputted directly into ChatGPT. The prompt should be as clear and as well engineered as possible.",
+      },
+      {
+        role: "system",
+        name: "example_user",
+        content: `{"I need help building":"Blog","a website from scratch":"Custom design and development"}`,
+      },
+      {
+        role: "system",
+        name: "example_assistant",
+        content:
+          "I need help building a blog, including custom desgin and development if a webite from scratch.",
+      },
+      { role: "user", content: input },
+    ],
+    model: "gpt-3.5-turbo",
+  });
+  return completion.choices[0].message.content as string;
+};
 export const submitCompletion = async (input: string): Promise<IResponse[]> => {
   const completion = await openai.chat.completions.create({
     messages: [
       {
         role: "system",
         content:
-          "your task is to analyze the provided prompt in terms of effectiveness when communicating with a large language model. Your response should take the form of JSON, where you identif different aspects of the prompt that could benefit from clarification. Your response should break the prompt down into chunks into a JSON array where each chunk is assigned a threshold from 0-1 where 1 does not require clarification and 0 requires lots of clarification. Each json object should contain the original chunk of the prompt, the threshold raiting, a heading for the UI and an array of clarification suggestions.",
+          "Analyze the user's prompt and return a JSON array. Each object represents a 'chunk' of the prompt and includes a 'threshold' score between 0 and 1. A higher 'threshold' score indicates that the chunk is less clear and should be displayed in the UI for clarification. Include a 'heading' for UI section titles and 'suggestions' with actionable items for the user. If a chunk introduces potential contradictions or confusion, detail this in 'adversity' with a severity 'threshold' and a 'reason', if the chunk does not introduce and issues, deatils this in 'adversity' with a severity of 0.1 or 0. The 'analyzed' section should inform the user of the chunk's relative impact on the overall prompt, with a 'weight' indicating the extent of this impact, and a 'reason' detailing why. The goal is to enhance the clarity and effectiveness of the prompt.",
       },
       {
         role: "system",
@@ -25,15 +58,86 @@ export const submitCompletion = async (input: string): Promise<IResponse[]> => {
         role: "system",
         name: "example_assistant",
         content: `[
-          {"chunk": "I am looking for some help", "threshold": 0.7, heading: "Clarify the type of help",suggestions: ["Overviews", "in-depth assistance", "theory", "practice problems"],
-          {"chunk": "help with math", "threshold": 0.9, heading: "What is/are the topics or ares of math you are looking for help with?", suggestions: ["Fractions", "Multiplication", "Algebra", "Calculus"]
+        {
+          "chunk": "I am looking for some help",
+          "threshold": 0.8,
+          "heading": "Specify the type of help needed",
+          "suggestions": ["Overview", "In-depth assistance", "Theory exploration", "Practice problems"],
+          "adversity": {
+            "threshold": 0.9,
+            "reason": "The chunk is vague without context."
+          },
+          "analyzed": {
+            "weight": 0.3,
+            "reason": "This chunk is less informative because it lacks specificity about the type of help needed."
+          }
+        },
+        {
+          "chunk": "with math",
+          "threshold": 0.9,
+          "heading": "Identify Math Topics",
+           "suggestions": ["Fractions", "Multiplication", "Algebra", "Calculus"],
+          "adversity": {
+            "threshold": 0.8,
+            "reason": "While 'math' is a clearer subject area, it is still a broad category without specifics."
+          },
+          "analyzed": {
+            "weight": 0.7,
+            "reason": "This chunk provides a subject area which is more informative and narrows down the type of assistance required."
+          }
+        }
       ]`,
+      },
+      {
+        role: "system",
+        name: "example_assistant",
+        content: `
+        [
+  {
+    "chunk": "I am looking for some assistance",
+    "threshold": 0.8,
+    "heading": "Specify the type of assistance needed",
+    "suggestions": [
+      "Essay writing",
+      "Concept clarification",
+      "Research guidance",
+      "Critical analysis"
+    ],
+    "adversity": {
+      "threshold": 0.9,
+      "reason": "The chunk is vague without context."
+    },
+    "analyzed": {
+      "weight": 0.3,
+      "reason": "This chunk is less informative because it lacks specificity about the type of assistance needed."
+    }
+  },
+  {
+    "chunk": "in philosophy",
+    "threshold": 0.5,
+    "heading": "Specify a Subject Area",
+    "suggestions": [
+      "Ethics",
+      "Metaphysics",
+      "Logic"
+    ],
+    "adversity": {
+      "threshold": 0.5,
+      "reason": "Pholosophy is a large academic subject, which could effect the specificity of the response."
+    },
+    "analyzed": {
+      "weight": 0.9,
+      "reason": "This chunk provides a specific subject area, which is highly informative and narrows down the type of assistance required to philosophy-related topics."
+    }
+  }
+]
+      `,
       },
       { role: "user", content: input },
     ],
     model: "gpt-3.5-turbo",
-    // response_format: { type: "json_object" },
   });
+
   const response = completion.choices[0];
   const jsonRes = JSON.parse(response.message.content);
   console.log(jsonRes);

@@ -2,7 +2,7 @@ import classes from "./Chat.module.css";
 import { CgAttachment } from "react-icons/cg";
 import { SubmitButton } from "./SubmitButton";
 import { useState } from "react";
-export const PromptInput = ({ submitHandler }) => {
+export const PromptInput = ({ submitHandler , placeholder}) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [value, setValue] = useState("");
 
@@ -27,7 +27,7 @@ export const PromptInput = ({ submitHandler }) => {
         type="text"
         onChange={handleChange}
         name="prompt-input"
-        placeholder="Message ChatGPT..."
+        placeholder={placeholder || "Message ChatGPT..."}
         className={classes["prompt__input"]}
       />
       <SubmitButton disabled={isDisabled} handleSubmit={handleSubmit} />

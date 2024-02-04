@@ -5,23 +5,33 @@
 .chat {
   background-color: var(--grey-01);
   width: 100%;
-  height: 100%;
   flex-grow: 1;
   flex-basis: 0;
   flex-direction: column;
   padding: 2rem;
+  overflow-y: scroll;
+}
+.chat__actions {
+  width: 48rem;
+  margin: auto auto 0 auto;
+  position: sticky;
+  bottom: 1rem;
 }
 /* PROMPT */
 
 .prompt {
   display: flex;
   padding: 0.5rem;
-  border-radius: 14px;
-  border: solid 2px var(--grey-02);
+  border-radius: 13px;
+  border: solid 1px var(--grey-02);
+
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
   flex-grow: 1;
+}
+.prompt:focus-within {
+  border: solid 1px var(--grey-input);
 }
 .prompt__attach {
   height: 100%;

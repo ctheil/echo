@@ -2,13 +2,6 @@ import { FormEventHandler, useState } from "react";
 import { submitCompletion } from "../util/openAi";
 import { GptResponse } from "./GptResponse";
 
-export interface IResponse {
-  chunk: string;
-  heading: string;
-  threashold: number;
-  suggestions: string[];
-}
-
 export const GptInput = () => {
   const [val, setVal] = useState("");
   const [loading, setLoading] = useState(false);

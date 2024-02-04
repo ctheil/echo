@@ -1,18 +1,41 @@
 import { useState } from "react";
+import { StringToolTip } from "./StringToolTip";
+import { Response } from "../@types/response.interface";
 
-export const AnalyzedString = ({ string, weight, reason, color }) => {
+type Props = {
+  response: Response;
+  color: {
+    color: string;
+    font: string;
+  };
+  adversityColor: {
+    color: string;
+    font: string;
+  };
+};
+
+export const AnalyzedString = ({ response, color, adversityColor }: Props) => {
   const [hover, setHover] = useState(false);
 
+  console.log("STRING", response, color);
+
   return (
-    <span
-      onMouseOver={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      style={{
-        textDecorationColor: color,
-        backgroundColor: hover ? color : "transparent",
-      }}
+    <StringToolTip
+      response={response}
+      adversityColor={adversityColor}
+      color={color}
     >
-      {" " + string}
-    </span>
+      <span
+        onMouseOver={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        style={{
+          textDecorationColor: color.color,
+          backgroundColor: hover ? color.color : "transparent",
+          color: hover ? color.font : "",
+        }}
+      >
+        {" " + response.chunk}
+      </span>
+    </StringToolTip>
   );
 };

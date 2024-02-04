@@ -1,6 +1,10 @@
 :root {
   --grey-01: #343541;
   --grey-02: #444654;
+  --grey-03: #9a9b9f;
 
   --grey-04: #c5c5d1;
+
+  --grey-input: #4f505a;
+  --grey-input-focused: #585863;
 }
