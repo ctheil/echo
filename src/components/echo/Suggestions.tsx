@@ -49,12 +49,13 @@ export const Suggestions = ({ response, loading, onSubmit }) => {
     const out = suggestions || {};
 
     out[chunk] = data;
-    setSuggestions(out);
-    console.log(suggestions);
+    out.hasSuggestions = true;
+    return setSuggestions(out);
   };
   const finalizeSubmit = () => {
     onSubmit(suggestions);
   };
+
   if (!response) return;
   return (
     <div className={classes["suggestions"]}>
@@ -66,7 +67,16 @@ export const Suggestions = ({ response, loading, onSubmit }) => {
           response={s}
         />
       ))}
-      <Button onClick={finalizeSubmit}>Revise Prompt</Button>
+      <Button
+        sx={{ marginTop: 1 }}
+        fullWidth
+        variant="contained"
+        onClick={finalizeSubmit}
+        color="secondary"
+        disabled={!suggestions?.hasSuggestions}
+      >
+        Revise Prompt
+      </Button>
     </div>
   );
 };

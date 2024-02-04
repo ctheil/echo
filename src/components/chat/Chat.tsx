@@ -6,6 +6,7 @@ import { submitCompletion, submitPrompt } from "../../util/openAi";
 import { Response } from "../@types/response.interface";
 export const Chat = () => {
   const [response, setResponse] = useState<null | Response[]>(null);
+  const [echoEnabled, setEchoEnabled] = useState(false);
   const [conversation, setConversation] = useState<
     {
       role: string;
@@ -18,6 +19,9 @@ export const Chat = () => {
 
   const [loading, setLoading] = useState(false);
   const handleSubmit = async (data: string) => {
+    if (!echoEnabled) {
+      return sendMessage(data);
+    }
     try {
       setLoading(true);
       const res = await submitCompletion(data);
@@ -40,6 +44,8 @@ export const Chat = () => {
     <main className={classes["chat"]}>
       <div className={classes["chat__actions"]}>
         <Echo
+          toggle={() => setEchoEnabled(!echoEnabled)}
+          enabled={echoEnabled}
           response={response}
           loading={loading}
           submitPrompt={sendMessage}

@@ -4,6 +4,8 @@
   border: solid 1px #333333;
   display: flex;
   flex-direction: column;
+  z-index: -1;
+  overflow: hidden;
 }
 
 .echo__chunk {

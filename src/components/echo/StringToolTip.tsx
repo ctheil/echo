@@ -63,7 +63,17 @@ export const StringToolTip = ({
                   {weightStr}
                 </Box>
                 <Box
-                  sx={{ color: weight < 0.5 ? "" : color, typography: "h6" }}
+                  sx={{
+                    color: color.font,
+                    backgroundColor: color.color,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    paddingLeft: 1,
+                    paddingRight: 1,
+                    margin: 0,
+                    borderRadius: 3,
+                    typography: "h6",
+                  }}
                 >
                   {weight}
                 </Box>

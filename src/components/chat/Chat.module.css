@@ -29,6 +29,20 @@
   justify-content: space-between;
   gap: 0.5rem;
   flex-grow: 1;
+  background-color: var(--grey-01);
+  position: relative;
+}
+.prompt::after {
+  content: " ";
+  position: absolute;
+  height: 100%;
+  bottom: -102%;
+  left: 0;
+  right: 0;
+  /* z-index: -1; */
+
+  background-color: var(--grey-01);
+  /* background-color: red; */
 }
 .prompt:focus-within {
   border: solid 1px var(--grey-input);
