@@ -8,7 +8,8 @@
   border-radius: 14px;
   gap: 10px;
   z-index: -1;
-  overflow: hidden;
+  overflow-y: auto;
+  max-height: 50vh;
 }
 .echo__heading--flex {
   display: flex;

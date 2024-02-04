@@ -1,15 +1,18 @@
-import { Button, Skeleton, Typography } from "@mui/material";
+import { Button, Skeleton } from "@mui/material";
 import classes from "./Echo.module.css";
 import { Suggestion } from "./Suggestion";
 import { useState } from "react";
-import { SubmitButton } from "../chat/SubmitButton";
 
 type SuggestionProps = {
   loading: boolean;
   response: Response;
   onSubmit: Function;
 };
-export const Suggestions = ({ response, loading, onSubmit }) => {
+export const Suggestions = ({
+  response,
+  loading,
+  onSubmit,
+}: SuggestionProps) => {
   const [suggestions, setSuggestions] = useState({});
   if (loading) {
     //return skeleton
@@ -59,21 +62,23 @@ export const Suggestions = ({ response, loading, onSubmit }) => {
   if (!response) return;
   return (
     <div className={classes["suggestions"]}>
-      {response.map((s: Response, i: number) => (
-        <Suggestion
-          key={i}
-          last={i === response.length - 1}
-          handleSubmit={submitHandler}
-          response={s}
-        />
-      ))}
+      {response.map((s: Response, i: number) => {
+        if (s.threshold < 0.4) return;
+        return (
+          <Suggestion
+            key={i}
+            last={i === response.length - 1}
+            handleSubmit={submitHandler}
+            response={s}
+          />
+        );
+      })}
       <Button
         sx={{ marginTop: 1 }}
         fullWidth
         variant="contained"
         onClick={finalizeSubmit}
         color="secondary"
-        disabled={!suggestions?.hasSuggestions}
       >
         Revise Prompt
       </Button>

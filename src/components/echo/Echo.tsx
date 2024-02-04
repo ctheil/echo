@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AnalyzedPrompt } from "./AnalyzedPrompt";
 import classes from "./Echo.module.css";
 import {
+  Box,
   Divider,
   Skeleton,
   Switch,
@@ -43,13 +44,21 @@ export const Echo = ({ response, loading, toggle, enabled }: Props) => {
         <AnimatePresence>
           <motion.div
             className={classes["echo"]}
-            initial={{ translateY: "3rem", opacity: 0 }}
-            animate={{ translateY: "1.5rem", opacity: 0.7 }}
+            initial={{ translateY: "6rem", opacity: 0 }}
+            animate={{ translateY: "9rem", opacity: 0.7 }}
             exit={{ translateY: "3rem", opacity: 0.7 }}
-            whileHover={{ translateY: "1.3rem", scale: 1, opacity: 1 }}
+            transition={{ type: "spring", ease: "easeOut", duration: 0.4 }}
+            whileHover={{ translateY: "1.5rem", scale: 1, opacity: 1 }}
             style={{ padding: "0.3rem 1.2rem 0.7rem 1.2rem", scale: 0.99 }}
           >
             <EchoHeading heading="Echo" enabled={enabled} toggle={toggle} />
+            <Typography component="div" sx={{ marginBottom: 3 }}>
+              <Box sx={{ typography: "h6" }}>
+                Enhance your prompts with Echo Analysis!
+              </Box>
+              Get instant feedback on your input to refine clarity and
+              effectiveness. Enable now to explore smarter interactions.
+            </Typography>
           </motion.div>
         </AnimatePresence>
       </ThemeProvider>

@@ -51,6 +51,7 @@ export const Chat = () => {
           submitPrompt={sendMessage}
         />
         <PromptInput
+          className="prompt__main"
           submitHandler={handleSubmit}
           placeholder="Message ChatGPT..."
         />
