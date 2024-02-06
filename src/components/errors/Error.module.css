@@ -1,0 +1,25 @@
+@import "../../styles/global.css";
+
+.error {
+  padding: 0.8rem;
+  background-color: var(--error-05-trans);
+  border: solid 1px var(--error-05);
+  border-radius: 6px;
+  transition: all 0.2s;
+  opacity: 0.8;
+  display: flex;
+  gap: 0.8rem;
+  width: 100%;
+  align-items: center;
+  margin: 1rem 0;
+}
+button {
+  appearance: none;
+}
+.error:hover {
+  border-color: var(--error-05);
+  opacity: 1;
+}
+.error__icon {
+  color: var(--error-05);
+}

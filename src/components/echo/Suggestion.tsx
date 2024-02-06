@@ -10,13 +10,18 @@ type Props = {
   last: boolean;
 };
 export const Suggestion = ({ response, handleSubmit, last }: Props) => {
-  const [selectedChip, setSelectedChip] = useState();
+  const [selectedChip, setSelectedChip] = useState<string>("");
+  const [customChip, setCustomChip] = useState("");
   const handleChipClick = (chip: string) => {
     setSelectedChip(chip);
     handleSubmit(chip, response.chunk);
   };
   const submitHandler = (data: string) => {
     response.suggestions.push(data);
+    setSelectedChip(data);
+  };
+  const handleInputChange = (data: string) => {
+    setCustomChip(data);
     setSelectedChip(data);
     handleSubmit(data, response.chunk);
   };
@@ -25,6 +30,14 @@ export const Suggestion = ({ response, handleSubmit, last }: Props) => {
       <h3 className={classes["echo__heading"]}>{response.heading}</h3>
       <p className={classes["suggestion__chunk"]}>{response.chunk}</p>
       <div className={classes["chips"]}>
+        {customChip && (
+          <Chip
+            variant={selectedChip === customChip ? "filled" : "outlined"}
+            label={customChip}
+            onClick={handleChipClick.bind(this, customChip)}
+          />
+        )}
+
         {response.suggestions.map((s, i) => (
           <Chip
             key={i}
@@ -34,7 +47,12 @@ export const Suggestion = ({ response, handleSubmit, last }: Props) => {
           />
         ))}
       </div>
-      <PromptInput placeholder="Suggestion..." submitHandler={submitHandler} />
+      <PromptInput
+        handleChange={handleInputChange}
+        placeholder="Suggestion..."
+        submitHandler={submitHandler}
+        disabledSubmit={true}
+      />
 
       {!last && <Divider sx={{ margin: "1.0rem 0 0.5rem 0" }}></Divider>}
     </div>

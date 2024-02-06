@@ -8,7 +8,8 @@
   border-radius: 14px;
   gap: 10px;
   z-index: -1;
-  overflow: hidden;
+  overflow-y: auto;
+  max-height: 50vh;
 }
 .echo__heading--flex {
   display: flex;
@@ -46,6 +47,7 @@
   margin: 0.8rem 0;
   display: flex;
   gap: 0.4rem;
+  overflow-x: scroll;
 }
 .suggestion {
   padding: 0.1rem 0;
@@ -53,4 +55,13 @@
 .suggestion__chunk {
   color: var(--grey-03);
   margin: 0.3rem;
+}
+
+/* SETTINGS */
+.echo__settings {
+    display: flex;
+    align-items: center;
+}
+.settings__icon {
+  color: var(--grey-03);
 }

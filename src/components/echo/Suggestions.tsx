@@ -1,15 +1,19 @@
-import { Button, Skeleton, Typography } from "@mui/material";
+import { Button, Skeleton } from "@mui/material";
 import classes from "./Echo.module.css";
 import { Suggestion } from "./Suggestion";
 import { useState } from "react";
-import { SubmitButton } from "../chat/SubmitButton";
+import { Response } from "../@types/response.interface";
 
 type SuggestionProps = {
   loading: boolean;
-  response: Response;
-  onSubmit: Function;
+  response: Response[];
+  onSubmit: (suggestions: { [key: string]: string }) => void;
 };
-export const Suggestions = ({ response, loading, onSubmit }) => {
+export const Suggestions = ({
+  response,
+  loading,
+  onSubmit,
+}: SuggestionProps) => {
   const [suggestions, setSuggestions] = useState({});
   if (loading) {
     //return skeleton
@@ -46,10 +50,12 @@ export const Suggestions = ({ response, loading, onSubmit }) => {
     );
   }
   const submitHandler = (data: string, chunk: string) => {
-    const out = suggestions || {};
+    const out: { [key: string]: string | boolean } = suggestions || {};
+
 
     out[chunk] = data;
     out.hasSuggestions = true;
+    console.log(out)
     return setSuggestions(out);
   };
   const finalizeSubmit = () => {
@@ -59,21 +65,23 @@ export const Suggestions = ({ response, loading, onSubmit }) => {
   if (!response) return;
   return (
     <div className={classes["suggestions"]}>
-      {response.map((s: Response, i: number) => (
-        <Suggestion
-          key={i}
-          last={i === response.length - 1}
-          handleSubmit={submitHandler}
-          response={s}
-        />
-      ))}
+      {response.map((s: Response, i: number) => {
+        if (s.threshold < 0.4) return;
+        return (
+          <Suggestion
+            key={i}
+            last={i === response.length - 1}
+            handleSubmit={submitHandler}
+            response={s}
+          />
+        );
+      })}
       <Button
         sx={{ marginTop: 1 }}
         fullWidth
         variant="contained"
         onClick={finalizeSubmit}
         color="secondary"
-        disabled={!suggestions?.hasSuggestions}
       >
         Revise Prompt
       </Button>

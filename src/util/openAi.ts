@@ -21,9 +21,19 @@ export const revisePrompt = async (input: string): Promise<string> => {
     messages: [
       {
         role: "system",
-        content:
-          "You are a very talented prompt engineer who specalizes in engineering prompts for LLMs and ChatGPT. Please revise the provided prompt (which is formatted in JSON) and improve it based on the attached clarifications. The JSON is structured so that the original string of the prompt is the key of the object, and the value is the clarification. Your response should take the form of standard plain text as the revised prompt ready to be inputted directly into ChatGPT. The prompt should be as clear and as well engineered as possible.",
+        content: `You are a very talented prompt engineer who specalizes in engineering prompts for LLMs and ChatGPT. Please revise the provided prompt (which is formatted in JSON) and improve it based on the attached clarifications. The JSON is structured so that the original string of the prompt is the key of the object, and the value is the clarification. Your response should take the form of standard plain text as the revised prompt ready to be inputted directly into ChatGPT. The prompt should be as clear and as well engineered as possible. The prompt should be as specific as possible based on the information you are given and should include any additional information relevant to the prompt to detter help the user get what they need from their initial prompt.
+            Desired Format:
+            Basic plain text to be outputted raw directly to the user. This should not contain any information or analysis, only the revised prompt.
+          `,
       },
+      // {
+      //   role: "system",
+      //   content: `This engineered prompt is analyzed based on the following engineering prompt. You should do your best to avoid adding content to the engineered prompt that would result in this prompt flagging it as needing additional context:
+      //  Engineering Prompt: """
+      //   ${INITIAL_ENGINEER_PROMPT}
+      //   """
+      //       `,
+      // },
       {
         role: "system",
         name: "example_user",
@@ -35,19 +45,58 @@ export const revisePrompt = async (input: string): Promise<string> => {
         content:
           "I need help building a blog, including custom desgin and development if a webite from scratch.",
       },
-      { role: "user", content: input },
+      {
+        role: "user",
+        content: `Prompt: """
+          ${input}
+          """
+          `,
+      },
     ],
     model: "gpt-3.5-turbo",
   });
   return completion.choices[0].message.content as string;
 };
+const INITIAL_ENGINEER_PROMPT =
+  "Analyze the user's prompt and return a JSON array. Each object represents a 'chunk' of the prompt and includes a 'threshold' score between 0 and 1. A higher 'threshold' score indicates that the chunk is less clear and should be displayed in the UI for clarification. Include a 'heading' for UI section titles and 'suggestions' with actionable items for the user. If a chunk introduces potential contradictions or confusion, detail this in 'adversity' with a severity 'threshold' and a 'reason', if the chunk does not introduce and issues, deatils this in 'adversity' with a severity of 0.1 or 0. The 'analyzed' section should inform the user of the chunk's relative impact on the overall prompt, with a 'weight' indicating the extent of this impact, and a 'reason' detailing why. The goal is to enhance the clarity and effectiveness of the prompt.";
 export const submitCompletion = async (input: string): Promise<IResponse[]> => {
   const completion = await openai.chat.completions.create({
     messages: [
       {
         role: "system",
+        content: INITIAL_ENGINEER_PROMPT,
+      },
+      {
+        role: "system",
         content:
-          "Analyze the user's prompt and return a JSON array. Each object represents a 'chunk' of the prompt and includes a 'threshold' score between 0 and 1. A higher 'threshold' score indicates that the chunk is less clear and should be displayed in the UI for clarification. Include a 'heading' for UI section titles and 'suggestions' with actionable items for the user. If a chunk introduces potential contradictions or confusion, detail this in 'adversity' with a severity 'threshold' and a 'reason', if the chunk does not introduce and issues, deatils this in 'adversity' with a severity of 0.1 or 0. The 'analyzed' section should inform the user of the chunk's relative impact on the overall prompt, with a 'weight' indicating the extent of this impact, and a 'reason' detailing why. The goal is to enhance the clarity and effectiveness of the prompt.",
+          "You should focus your efforts on the additioanl elements, subordinate clauses, or phrases in the prompt. For the main clause an analyis is still welcome, but the JSON object for this object should use very low thresholds so that it does not appear in the UI.",
+      },
+      {
+        role: "system",
+        content:
+          "For example: in the context of this sentence, 'I need help building something,' the main clause 'I need help' is not relevant to our analysis. Please provide suggestions rather for the phrase 'building something,' considering it as the key area of interest.",
+      },
+      {
+        role: "system",
+        content: `Desired Format: JSON Array - This is a strict format, so each chunk must have each element of this schema.
+              [
+        {
+          "chunk": string, // chunk of the prompt
+          "threshold": float, // between 0 and 1- 1 meaning it needs clarification, determining how much this part of the prompt would benefit from further clarification
+          "heading": "string, // UI heading indicating how to improve this part of the prompt
+          "suggestions": string[], // array of auto suggestions to improve the prompt
+          "adversity": {
+            "threshold": float, // between 0-1- 1 meaning it is adverse, determines how adversly this chunk effects the overall prompt
+            "reason": string, // reasoning for the threshold value
+          },
+          "analyzed": {
+            "weight": 0.3, // between 0-1- 1 meaning it has a major effect, determines the weight this chunk has on the prompt 
+            "reason": string // reasoning for the weight
+          }
+        },
+          ]
+              
+              `,
       },
       {
         role: "system",
@@ -133,7 +182,13 @@ export const submitCompletion = async (input: string): Promise<IResponse[]> => {
 ]
       `,
       },
-      { role: "user", content: input },
+      {
+        role: "user",
+        content: `Prompt: """
+          ${input}
+          """
+          `,
+      },
     ],
     model: "gpt-3.5-turbo",
   });
