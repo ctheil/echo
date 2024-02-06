@@ -1,7 +1,6 @@
 import OpenAI from "openai";
-import { IResponse } from "../components/GPT_test";
+import { Response } from "../components/@types/response.interface";
 
-//const client = OpenAI();
 const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
 console.log(OPENAI_API_KEY);
 
@@ -26,14 +25,6 @@ export const revisePrompt = async (input: string): Promise<string> => {
             Basic plain text to be outputted raw directly to the user. This should not contain any information or analysis, only the revised prompt.
           `,
       },
-      // {
-      //   role: "system",
-      //   content: `This engineered prompt is analyzed based on the following engineering prompt. You should do your best to avoid adding content to the engineered prompt that would result in this prompt flagging it as needing additional context:
-      //  Engineering Prompt: """
-      //   ${INITIAL_ENGINEER_PROMPT}
-      //   """
-      //       `,
-      // },
       {
         role: "system",
         name: "example_user",
@@ -59,7 +50,7 @@ export const revisePrompt = async (input: string): Promise<string> => {
 };
 const INITIAL_ENGINEER_PROMPT =
   "Analyze the user's prompt and return a JSON array. Each object represents a 'chunk' of the prompt and includes a 'threshold' score between 0 and 1. A higher 'threshold' score indicates that the chunk is less clear and should be displayed in the UI for clarification. Include a 'heading' for UI section titles and 'suggestions' with actionable items for the user. If a chunk introduces potential contradictions or confusion, detail this in 'adversity' with a severity 'threshold' and a 'reason', if the chunk does not introduce and issues, deatils this in 'adversity' with a severity of 0.1 or 0. The 'analyzed' section should inform the user of the chunk's relative impact on the overall prompt, with a 'weight' indicating the extent of this impact, and a 'reason' detailing why. The goal is to enhance the clarity and effectiveness of the prompt.";
-export const submitCompletion = async (input: string): Promise<IResponse[]> => {
+export const submitCompletion = async (input: string): Promise<Response[]> => {
   const completion = await openai.chat.completions.create({
     messages: [
       {
@@ -193,100 +184,12 @@ export const submitCompletion = async (input: string): Promise<IResponse[]> => {
     model: "gpt-3.5-turbo",
   });
 
-  const response = completion.choices[0];
-  const jsonRes = JSON.parse(response.message.content);
+  const response = completion.choices[0].message.content;
+  if (!response) {
+    const error = new Error("Malformatted response");
+    throw error;
+  }
+  const jsonRes = JSON.parse(response);
   console.log(jsonRes);
   return jsonRes;
 };
-
-// NOTE: Calling fns
-/*
-import OpenAI from "openai";
-const openai = new OpenAI();
-
-
-Example dummy function hard coded to return the same weather
-In production, this could be your backend API or an external API
-function getCurrentWeather(location, unit = "fahrenheit") {
-  if (location.toLowerCase().includes("tokyo")) {
-    return JSON.stringify({ location: "Tokyo", temperature: "10", unit: "celsius" });
-  } else if (location.toLowerCase().includes("san francisco")) {
-    return JSON.stringify({ location: "San Francisco", temperature: "72", unit: "fahrenheit" });
-  } else if (location.toLowerCase().includes("paris")) {
-    return JSON.stringify({ location: "Paris", temperature: "22", unit: "fahrenheit" });
-  } else {
-    return JSON.stringify({ location, temperature: "unknown" });
-  }
-}
-
-
-async function runConversation() {
-  // Step 1: send the conversation and available functions to the model
-  const messages = [
-    { role: "user", content: "What's the weather like in San Francisco, Tokyo, and Paris?" },
-  ];
-  const tools = [
-    {
-      type: "function",
-      function: {
-        name: "get_current_weather",
-        description: "Get the current weather in a given location",
-        parameters: {
-          type: "object",
-          properties: {
-            location: {
-              type: "string",
-              description: "The city and state, e.g. San Francisco, CA",
-            },
-            unit: { type: "string", enum: ["celsius", "fahrenheit"] },
-          },
-          required: ["location"],
-        },
-      },
-    },
-  ];
-
-
-  const response = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo-1106",
-    messages: messages,
-    tools: tools,
-    tool_choice: "auto", // auto is default, but we'll be explicit
-  });
-  const responseMessage = response.choices[0].message;
-
-  // Step 2: check if the model wanted to call a function
-  const toolCalls = responseMessage.tool_calls;
-  if (responseMessage.tool_calls) {
-    // Step 3: call the function
-    // Note: the JSON response may not always be valid; be sure to handle errors
-    const availableFunctions = {
-      get_current_weather: getCurrentWeather,
-    }; // only one function in this example, but you can have multiple
-    messages.push(responseMessage); // extend conversation with assistant's reply
-    for (const toolCall of toolCalls) {
-      const functionName = toolCall.function.name;
-      const functionToCall = availableFunctions[functionName];
-      const functionArgs = JSON.parse(toolCall.function.arguments);
-      const functionResponse = functionToCall(
-        functionArgs.location,
-        functionArgs.unit
-      );
-      messages.push({
-        tool_call_id: toolCall.id,
-        role: "tool",
-        name: functionName,
-        content: functionResponse,
-      }); // extend conversation with function response
-    }
-    const secondResponse = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo-1106",
-      messages: messages,
-    }); // get a new response from the model where it can see the function response
-    return secondResponse.choices;
-  }
-}
-
-
-runConversation().then(console.log).catch(console.error);
-*/
