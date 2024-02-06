@@ -21,31 +21,19 @@ export const revisePrompt = async (input: string): Promise<string> => {
     messages: [
       {
         role: "system",
-        content: `You are a very talented prompt engineer 
-        who specalizes in engineering prompts for LLMs and ChatGPT. 
-                Please revise the provided prompt (which is formatted in JSON) 
-            and improve it based on the attached clarifications. 
-            The JSON is structured so that the original string of the prompt 
-        is the key of the object, and the value is the clarification. 
-            Your response should take the form of standard plain text as the 
-        revised prompt ready to be inputted directly into ChatGPT. 
-            The prompt should be as clear and as well engineered as possible. 
-            The prompt should be as specific as possible based on the
-        information you are given and should include any additional information
-        relevant to the prompt to detter help the user get what they need 
-        from their initial prompt.
+        content: `You are a very talented prompt engineer who specalizes in engineering prompts for LLMs and ChatGPT. Please revise the provided prompt (which is formatted in JSON) and improve it based on the attached clarifications. The JSON is structured so that the original string of the prompt is the key of the object, and the value is the clarification. Your response should take the form of standard plain text as the revised prompt ready to be inputted directly into ChatGPT. The prompt should be as clear and as well engineered as possible. The prompt should be as specific as possible based on the information you are given and should include any additional information relevant to the prompt to detter help the user get what they need from their initial prompt.
             Desired Format:
             Basic plain text to be outputted raw directly to the user. This should not contain any information or analysis, only the revised prompt.
           `,
       },
-      {
-        role: "system",
-        content: `This engineered prompt is analyzed based on the following engineering prompt. You should do your best to avoid adding content to the engineered prompt that would result in this prompt flagging it as needing additional context:
-       Engineering Prompt: """
-        ${INITIAL_ENGINEER_PROMPT}
-        """
-            `,
-      },
+      // {
+      //   role: "system",
+      //   content: `This engineered prompt is analyzed based on the following engineering prompt. You should do your best to avoid adding content to the engineered prompt that would result in this prompt flagging it as needing additional context:
+      //  Engineering Prompt: """
+      //   ${INITIAL_ENGINEER_PROMPT}
+      //   """
+      //       `,
+      // },
       {
         role: "system",
         name: "example_user",
