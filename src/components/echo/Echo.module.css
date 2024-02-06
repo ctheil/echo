@@ -47,6 +47,7 @@
   margin: 0.8rem 0;
   display: flex;
   gap: 0.4rem;
+  overflow-x: scroll;
 }
 .suggestion {
   padding: 0.1rem 0;
@@ -54,4 +55,13 @@
 .suggestion__chunk {
   color: var(--grey-03);
   margin: 0.3rem;
+}
+
+/* SETTINGS */
+.echo__settings {
+    display: flex;
+    align-items: center;
+}
+.settings__icon {
+  color: var(--grey-03);
 }

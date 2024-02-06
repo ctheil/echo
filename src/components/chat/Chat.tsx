@@ -6,6 +6,7 @@ import { submitCompletion, submitPrompt } from "../../util/openAi";
 import { Response } from "../@types/response.interface";
 export const Chat = () => {
   const [response, setResponse] = useState<null | Response[]>(null);
+  const [workingPrompt, setWorkingPrompt] = useState("");
   const [echoEnabled, setEchoEnabled] = useState(false);
   const [conversation, setConversation] = useState<
     {
@@ -24,6 +25,7 @@ export const Chat = () => {
     }
     try {
       setLoading(true);
+      setWorkingPrompt(data);
       const res = await submitCompletion(data);
       setResponse(res as Response[]);
       console.log(response);
@@ -49,6 +51,11 @@ export const Chat = () => {
           response={response}
           loading={loading}
           submitPrompt={sendMessage}
+          refreshResponse={() =>
+            workingPrompt
+              ? handleSubmit(workingPrompt)
+              : window.location.reload()
+          }
         />
         <PromptInput
           className="prompt__main"

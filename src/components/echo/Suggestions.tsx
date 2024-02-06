@@ -2,11 +2,12 @@ import { Button, Skeleton } from "@mui/material";
 import classes from "./Echo.module.css";
 import { Suggestion } from "./Suggestion";
 import { useState } from "react";
+import { Response } from "../@types/response.interface";
 
 type SuggestionProps = {
   loading: boolean;
-  response: Response;
-  onSubmit: Function;
+  response: Response[];
+  onSubmit: (suggestions: { [key: string]: string }) => void;
 };
 export const Suggestions = ({
   response,
@@ -49,10 +50,12 @@ export const Suggestions = ({
     );
   }
   const submitHandler = (data: string, chunk: string) => {
-    const out = suggestions || {};
+    const out: { [key: string]: string | boolean } = suggestions || {};
+
 
     out[chunk] = data;
     out.hasSuggestions = true;
+    console.log(out)
     return setSuggestions(out);
   };
   const finalizeSubmit = () => {
