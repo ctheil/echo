@@ -51,11 +51,13 @@ export const Suggestions = ({
   }
   const submitHandler = (data: string, chunk: string) => {
     const out: { [key: string]: string | boolean } = suggestions || {};
-
+    response.map((r) => {
+      out[r.chunk] = "";
+    });
 
     out[chunk] = data;
     out.hasSuggestions = true;
-    console.log(out)
+    console.log(out);
     return setSuggestions(out);
   };
   const finalizeSubmit = () => {

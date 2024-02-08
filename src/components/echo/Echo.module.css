@@ -1,8 +1,8 @@
 @import "../../styles/global.css";
-.echo {
+.echo__disabled,
+.echo__enabled {
   display: flex;
   flex-direction: column;
-  border: solid 1px var(--grey-02);
   padding: 1rem 1.2rem;
   margin-bottom: 1rem;
   border-radius: 14px;
@@ -10,6 +10,12 @@
   z-index: -1;
   overflow-y: auto;
   max-height: 50vh;
+}
+.echo__disabled {
+  border: solid 1px var(--grey-02);
+}
+.echo__enabled {
+  border: solid 1px var(--green-05);
 }
 .echo__heading--flex {
   display: flex;
@@ -59,8 +65,8 @@
 
 /* SETTINGS */
 .echo__settings {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .settings__icon {
   color: var(--grey-03);

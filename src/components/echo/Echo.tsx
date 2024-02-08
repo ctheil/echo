@@ -55,7 +55,7 @@ export const Echo = ({
       <ThemeProvider theme={theme}>
         <AnimatePresence>
           <motion.div
-            className={classes["echo"]}
+            className={classes[enabled ? "echo__enabled" : "echo__disabled"]}
             initial={{ translateY: "6rem", opacity: 0 }}
             animate={{ translateY: "9rem", opacity: 0.7 }}
             exit={{ translateY: "3rem", opacity: 0.7 }}
@@ -195,7 +195,7 @@ export const Echo = ({
   return (
     <ThemeProvider theme={theme}>
       <AnimatePresence>
-        <div className={classes["echo"]}>
+        <div className={classes[enabled ? "echo__enabled" : "echo__disabled"]}>
           {!enabled && disabledState}
           {isLoading && revisedLoading}
           {revised && revisedState}

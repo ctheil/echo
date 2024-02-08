@@ -9,4 +9,6 @@
   --grey-input-focused: #585863;
   --error-05: #dd524c;
   --error-05-trans: rgba(221, 82, 76, 0.1);
+  --green-05: #0fa47f;
+  --green-05-trans: rgba(15, 164, 127, 0.1);
 }
