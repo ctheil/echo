@@ -1,21 +1,53 @@
 import OpenAI from "openai";
 import { Response } from "../components/@types/response.interface";
+import Storage from "./key";
 
-const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
-console.log(OPENAI_API_KEY);
-
+export const testKey = async (key: string): Promise<string | Error> => {
 const openai = new OpenAI({
-  apiKey: OPENAI_API_KEY,
+  apiKey: key,
   dangerouslyAllowBrowser: true,
 });
+try {
+
+const completion = await openai.chat.completions.create({
+    messages: [{role: "user", content:"Hello world!"}],
+    model: "gpt-3.5-turbo"
+})
+const res = completion.choices[0].message.content as string
+console.log(res)
+return res
+} catch (err) {
+    const error = new Error("Invalid api key");
+    console.log(error); 
+   return error; 
+}
+    
+
+}
 export const submitPrompt = async (input: string): Promise<string> => {
+    const key = Storage.get("key");
+    if (!key) {
+        throw new Error("invalid api key")
+    }
+const openai = new OpenAI({
+  apiKey: key,
+  dangerouslyAllowBrowser: true,
+});
   const completion = await openai.chat.completions.create({
     messages: [{ role: "user", content: input }],
     model: "gpt-3.5-turbo",
   });
   return completion.choices[0].message.content as string;
 };
-export const revisePrompt = async (input: string): Promise<string> => {
+export const revisePrompt = async (input: string ): Promise<string> => {
+    const key = Storage.get("key");
+    if (!key) {
+        throw new Error("invalid api key")
+    }
+const openai = new OpenAI({
+  apiKey: key,
+  dangerouslyAllowBrowser: true,
+});
   const completion = await openai.chat.completions.create({
     messages: [
       {
@@ -51,6 +83,14 @@ export const revisePrompt = async (input: string): Promise<string> => {
 const INITIAL_ENGINEER_PROMPT =
   "Analyze the user's prompt and return a JSON array. Each object represents a 'chunk' of the prompt and includes a 'threshold' score between 0 and 1. A higher 'threshold' score indicates that the chunk is less clear and should be displayed in the UI for clarification. Include a 'heading' for UI section titles and 'suggestions' with actionable items for the user. If a chunk introduces potential contradictions or confusion, detail this in 'adversity' with a severity 'threshold' and a 'reason', if the chunk does not introduce and issues, deatils this in 'adversity' with a severity of 0.1 or 0. The 'analyzed' section should inform the user of the chunk's relative impact on the overall prompt, with a 'weight' indicating the extent of this impact, and a 'reason' detailing why. The goal is to enhance the clarity and effectiveness of the prompt.";
 export const submitCompletion = async (input: string): Promise<Response[]> => {
+    const key = Storage.get("key");
+    if (!key) {
+        throw new Error("invalid api key")
+    }
+const openai = new OpenAI({
+  apiKey: key,
+  dangerouslyAllowBrowser: true,
+});
   const completion = await openai.chat.completions.create({
     messages: [
       {
