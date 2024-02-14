@@ -49,7 +49,7 @@ export const Suggestion = ({ response, handleSubmit, last }: Props) => {
       </div>
       <PromptInput
         handleChange={handleInputChange}
-        placeholder="Suggestion..."
+        placeholder="Have another idea?"
         submitHandler={submitHandler}
         disabledSubmit={true}
       />

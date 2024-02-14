@@ -1,6 +1,8 @@
-import { Switch, IconButton } from "@mui/material";
+import { IconButton, Switch } from "@mui/material";
 import classes from "./Echo.module.css";
-import Settings from "./Settings";
+import { useState } from "react";
+import { BiHelpCircle, BiSolidHelpCircle } from "react-icons/bi";
+import { EchoTut } from "./EchoTut";
 
 type Props = {
   enabled: boolean;
@@ -8,13 +10,23 @@ type Props = {
   heading: string;
 };
 export const EchoHeading = ({ enabled, toggle, heading }: Props) => {
+    const [hoverHelp, setHoverHelp ] = useState(false)
+    const [openTut, setOpenTut] = useState(false)
+
+    const closeTut = () => setOpenTut(false)
   return (
     <div className={classes["echo__heading--flex"]}>
-      <h3 className={classes["echo__heading"]}>{heading}</h3>
+    <EchoTut open={openTut} handleClose={closeTut}/>
+      <h3  onClick={toggle} style={{cursor: "pointer"}} className={classes["echo__heading"]}>{heading}</h3>
       <div className={classes["echo__settings"]}>
-        <Settings />
+      <IconButton onClick={() => setOpenTut(true)} sx={{opacity: 0.6}} onMouseEnter={() => setHoverHelp(true)} onMouseLeave={() => setHoverHelp(false)}>
+        {hoverHelp ? 
+        <BiSolidHelpCircle />
+        :
+        <BiHelpCircle />
+        } 
+      </IconButton>
         <Switch
-          label="enable"
           checked={enabled}
           onChange={toggle}
           color="secondary"
@@ -23,3 +35,14 @@ export const EchoHeading = ({ enabled, toggle, heading }: Props) => {
     </div>
   );
 };
+// <Settings 
+// />
+//
+//   // <Typography component="div" sx={{ marginBottom: 3 }}>
+  //   <Box sx={{ typography: "h6" }}>
+  //     Enhance your prompts with Echo Analysis!
+  //   </Box>
+  //   Get instant feedback on your input to refine clarity and
+  //   effectiveness. Enable now to explore smarter interactions.
+  // </Typography>
+

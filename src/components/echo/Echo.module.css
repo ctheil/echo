@@ -59,8 +59,8 @@
 
 /* SETTINGS */
 .echo__settings {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .settings__icon {
   color: var(--grey-03);
