@@ -57,6 +57,14 @@ export const PromptInput = (props: Props) => {
         <CgAttachment size={24} className={classes["prompt__attach--icon"]} />
       </div>
       <textarea
+        onKeyDown={(e) => {
+          // Listen for return and submit
+          console.log(e.key === "Enter" && !e.shiftKey);
+          if (e.key === "Enter" && !e.shiftKey) {
+            ref.current?.blur();
+            handleSubmit();
+          }
+        }}
         ref={ref}
         onChange={handleChange}
         name="prompt-input"
