@@ -76,7 +76,7 @@ const openai = new OpenAI({
           `,
       },
     ],
-    model: "gpt-3.5-turbo",
+    model: "gpt-4",
   });
   return completion.choices[0].message.content as string;
 };
@@ -221,7 +221,7 @@ const openai = new OpenAI({
           `,
       },
     ],
-    model: "gpt-3.5-turbo",
+    model: "gpt-4",
   });
 
   const response = completion.choices[0].message.content;
