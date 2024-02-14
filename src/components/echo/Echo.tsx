@@ -24,6 +24,7 @@ type Props = {
   enabled: boolean;
   sendPrompt: (message: string) => void;
   refreshResponse: () => void;
+  started: boolean
 };
 
 export const Echo = ({
@@ -31,7 +32,7 @@ export const Echo = ({
   loading,
   toggle,
   enabled,
-  sendPrompt,
+  started,
   refreshResponse,
 }: Props) => {
   const [revised, setRevised] = useState("");
@@ -50,32 +51,29 @@ export const Echo = ({
     setRevised(newPrompt);
     setIsLoading(false);
   };
-  if ((!response && !loading) || !enabled) {
+  if (started && !loading && !response) {
     return (
       <ThemeProvider theme={theme}>
+      {started &&
         <AnimatePresence>
           <motion.div
             className={classes["echo"]}
-            initial={{ translateY: "6rem", opacity: 0 }}
-            animate={{ translateY: "9rem", opacity: 0.7 }}
-            exit={{ translateY: "3rem", opacity: 0.7 }}
-            transition={{ type: "spring", ease: "easeOut", duration: 0.4 }}
-            whileHover={{ translateY: "1.5rem", scale: 1, opacity: 1 }}
+            initial={{ translateY: "4rem", opacity: .5 }}
+            animate={{ translateY: "1.7rem", opacity: 0.7 }}
+            exit={{ translateY: "4rem", opacity: 0.7,  }}
+            transition={{ type: "spring", duration: 0.5 }}
+            // whileHover={{ translateY: "1.5rem", scale: 1, opacity: 1 }}
             style={{ padding: "0.3rem 1.2rem 0.7rem 1.2rem", scale: 0.99 }}
           >
-            <EchoHeading heading="Echo" enabled={enabled} toggle={toggle} />
-            <Typography component="div" sx={{ marginBottom: 3 }}>
-              <Box sx={{ typography: "h6" }}>
-                Enhance your prompts with Echo Analysis!
-              </Box>
-              Get instant feedback on your input to refine clarity and
-              effectiveness. Enable now to explore smarter interactions.
-            </Typography>
+            <EchoHeading heading={ enabled ? "Echo will analyze and provide suggestions after you hit send." : "Need help with this prompt?" } enabled={enabled} toggle={toggle} />
           </motion.div>
         </AnimatePresence>
+        }
       </ThemeProvider>
     );
   }
+
+  
   if (!response && !loading) return;
   const revisedLoading = (
     <motion.div
@@ -114,43 +112,6 @@ export const Echo = ({
       </motion.div>
     </ErrorBoundary>
   );
-  const errorRes = [
-    {
-      chunk: "I need help building a brand",
-      threshold: 0.8,
-      heading: "Specify the type of brand",
-      suggestions: ["Product brand", "Service brand", "Personal brand"],
-      adversity: {
-        threshold: 0.8,
-        reason: "The chunk is vague without context.",
-      },
-      analyzed: {
-        weight: 0.3,
-        reason:
-          "This chunk is less informative because it lacks specificity about the type of brand needed to be built.",
-      },
-    },
-    {
-      chunk: "from scratch",
-      threshold: 0.9,
-      heading: "Clarify the scope of work",
-      suggestions: [
-        "Brand strategy",
-        "Logo design",
-        "Brand identity development",
-      ],
-      adversity: {
-        threshold: 0.9,
-        reason:
-          "The term 'from scratch' can be ambiguous and may require clarification.",
-      },
-      // analyzed: {
-      //   weight: 0.7,
-      //   reason:
-      //     "This chunk indicates a desire to start from the beginning in building the brand, but it would benefit from more specifics about the exact scope of work required.",
-      // },
-    },
-  ];
   const echoState = (
     <ErrorBoundary
       component={

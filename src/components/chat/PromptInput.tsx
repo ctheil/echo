@@ -8,6 +8,7 @@ type Props = {
   className?: string;
   handleChange: (data: string) => void;
   disabledSubmit: boolean;
+  setStarted: (started: boolean) => void;
 };
 export const PromptInput = (props: Props) => {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -19,6 +20,7 @@ export const PromptInput = (props: Props) => {
       return props.handleChange(val);
     }
     setValue(val);
+    props.setStarted(!!val)
 
     val === "" ? setIsDisabled(true) : setIsDisabled(false);
   };
@@ -27,9 +29,12 @@ export const PromptInput = (props: Props) => {
     //
     props.submitHandler(value);
   };
+  console.log("[value]: ", value ? "promt__active" : "prompt")
+
+  const promptClass = value ? "prompt__active" : "prompt"
 
   return (
-    <div className={classes[props.className || "prompt"]}>
+    <div className={classes[props.className || promptClass]}>
       <div className={classes["prompt__attach"]}>
         <CgAttachment size={24} className={classes["prompt__attach--icon"]} />
       </div>

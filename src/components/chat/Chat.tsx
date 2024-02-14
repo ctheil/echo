@@ -8,6 +8,8 @@ export const Chat = () => {
   const [response, setResponse] = useState<null | Response[]>(null);
   const [workingPrompt, setWorkingPrompt] = useState("");
   const [echoEnabled, setEchoEnabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [promptStarted, setPromptStarted] = useState(false)
   const [conversation, setConversation] = useState<
     {
       role: string;
@@ -17,8 +19,8 @@ export const Chat = () => {
     { role: "user", message: "I need help building a website from scratch." },
     { role: "system", message: "This is a response" },
   ]);
+  console.log("[promptStarted: ]", promptStarted)
 
-  const [loading, setLoading] = useState(false);
   const handleSubmit = async (data: string) => {
     if (!echoEnabled) {
       return sendMessage(data);
@@ -47,6 +49,7 @@ export const Chat = () => {
       <div className={classes["chat__actions"]}>
         <Echo
           toggle={() => setEchoEnabled(!echoEnabled)}
+          started={promptStarted}
           enabled={echoEnabled}
           response={response}
           loading={loading}
@@ -61,6 +64,7 @@ export const Chat = () => {
           className="prompt__main"
           submitHandler={handleSubmit}
           placeholder="Message ChatGPT..."
+          setStarted={setPromptStarted}
         />
       </div>
     </main>

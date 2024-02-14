@@ -20,6 +20,7 @@
 /* PROMPT */
 
 .prompt__main,
+.prompt__active,
 .prompt {
   display: flex;
   padding: 0.5rem;
@@ -32,6 +33,8 @@
   flex-grow: 1;
   background-color: var(--grey-01);
   position: relative;
+}
+.prompt__active {
   box-shadow: 0.3rem -0.2rem 1rem rgba(0, 0, 0, 0.1);
 }
 .prompt__main::after {
