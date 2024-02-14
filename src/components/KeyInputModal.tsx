@@ -38,7 +38,7 @@ export const KeyInputDialog = () => {
             <DialogTitle>OpenAI Api Key</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                    In order to interact with this feature, you must first garner an <Link color="secondary" href="https://openai.com/blog/openai-api">api key from OpenAI</Link> to interact with the ChatGPT model. <Link color="secondary" href="https://help.openai.com/en/articles/4936850-where-do-i-find-my-api-key">Need help finding you key?</Link>
+                    In order to interact with this feature, you must first garner an <Link target="_blank" color="secondary" href="https://openai.com/blog/openai-api">api key from OpenAI</Link> to interact with the ChatGPT model. <Link target="_blank" color="secondary" href="https://help.openai.com/en/articles/4936850-where-do-i-find-my-api-key">Need help finding you key?</Link>
                     </DialogContentText>
                     <TextField 
                     autoFocus
@@ -65,3 +65,5 @@ export const KeyInputDialog = () => {
             </Dialog>
         </ThemeProvider>
     }
+
+
