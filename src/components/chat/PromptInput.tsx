@@ -15,8 +15,9 @@ export const PromptInput = (props: Props) => {
   const [value, setValue] = useState("");
   const ref = useRef<HTMLTextAreaElement>(null);
 
+// listens for text area scroll height changes to resize
+// then resets max-height back to css defined height when < 66
   useEffect(() => {
-    console.log("running use effect...");
     if (ref.current) {
       ref.current.style.height = "inherit";
       const scrollHeight = ref.current.scrollHeight;
@@ -43,11 +44,8 @@ export const PromptInput = (props: Props) => {
     val === "" ? setIsDisabled(true) : setIsDisabled(false);
   };
   const handleSubmit = () => {
-    //TODO HANDLE SUBMIT
-    //
     props.submitHandler(value);
   };
-  console.log("[value]: ", value ? "promt__active" : "prompt");
 
   const promptClass = value ? "prompt__active" : "prompt";
 
@@ -58,6 +56,14 @@ export const PromptInput = (props: Props) => {
       </div>
       <textarea
         ref={ref}
+        onKeyDown={(e) => {
+            // Listen for return and submit
+          console.log(e.key === "Enter" && !e.shiftKey);
+          if (e.key === "Enter" && !e.shiftKey) {
+            ref.current?.blur();
+            handleSubmit();
+          }
+        }}
         onChange={handleChange}
         name="prompt-input"
         placeholder={props.placeholder || "Message ChatGPT..."}
