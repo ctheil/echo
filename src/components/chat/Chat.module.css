@@ -27,12 +27,13 @@
   border-radius: 13px;
   border: solid 1px var(--grey-02);
 
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 0.5rem;
   flex-grow: 1;
   background-color: var(--grey-01);
   position: relative;
+  overflow: hidden;
 }
 .prompt__active {
   box-shadow: 0.3rem -0.2rem 1rem rgba(0, 0, 0, 0.1);
@@ -57,6 +58,7 @@
 
   display: flex;
   align-items: center;
+  margin-bottom: 0.7rem;
 }
 .prompt__attach--icon {
 }
@@ -75,6 +77,23 @@
   font-size: 1.1rem;
   /* dark:placeholder-white/50 - This changes the placeholder color in dark mode */
   padding-left: 10px; /* pl-10 */
+  /* display: table-cell; */
+  /* vertical-align: middle; */
+  /* text-align: justify; */
+  /* white-space: normal; */
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+  box-sizing: border-box;
+  /* height: 52px; */
+  max-height: 44px;
+  overflow: hidden;
+  /* line-height: 22px; */
+}
+.prompt__input::placeholder {
+    font-size: 6rem;
+}
+.prompt__input textarea {
+    height: 16rem
 }
 
 .prompt__input:focus-visible {
@@ -107,6 +126,7 @@
   /* width: 20px; */
   /* margin-right: 0.05rem; */
   appearance: none;
+  margin-bottom: 0.45rem;
 
   /* justify-items: center; */
   /* align-items: center; */

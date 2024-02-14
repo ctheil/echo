@@ -10,3 +10,7 @@
   --error-05: #dd524c;
   --error-05-trans: rgba(221, 82, 76, 0.1);
 }
+
+body, #root, main {
+    overflow: hidden;
+}
