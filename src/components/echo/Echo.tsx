@@ -16,6 +16,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { EchoHeading } from "./EchoHeading";
 import ErrorBoundary from "../errors/ErrorBoundary";
 import ErrorComponent from "../errors/ErrorComponent";
+import getOS from "../../util/detectOs";
 
 type Props = {
   response: Response[] | null;
@@ -24,7 +25,7 @@ type Props = {
   enabled: boolean;
   sendPrompt: (message: string) => void;
   refreshResponse: () => void;
-  started: boolean
+  started: boolean;
 };
 
 export const Echo = ({
@@ -54,26 +55,33 @@ export const Echo = ({
   if (started && !loading && !response) {
     return (
       <ThemeProvider theme={theme}>
-      {started &&
-        <AnimatePresence>
-          <motion.div
-            className={classes["echo"]}
-            initial={{ translateY: "4rem", opacity: .5 }}
-            animate={{ translateY: "1.7rem", opacity: 0.7 }}
-            exit={{ translateY: "4rem", opacity: 0.7,  }}
-            transition={{ type: "spring", duration: 0.5 }}
-            // whileHover={{ translateY: "1.5rem", scale: 1, opacity: 1 }}
-            style={{ padding: "0.3rem 1.2rem 0.7rem 1.2rem", scale: 0.99 }}
-          >
-            <EchoHeading heading={ enabled ? "Echo will analyze and provide suggestions after you hit send." : "Need help with this prompt?" } enabled={enabled} toggle={toggle} />
-          </motion.div>
-        </AnimatePresence>
-        }
+        {started && (
+          <AnimatePresence>
+            <motion.div
+              className={classes["echo"]}
+              initial={{ translateY: "4rem", opacity: 0.5 }}
+              animate={{ translateY: "1.7rem", opacity: 0.7 }}
+              exit={{ translateY: "4rem", opacity: 0.7 }}
+              transition={{ type: "spring", duration: 0.5 }}
+              // whileHover={{ translateY: "1.5rem", scale: 1, opacity: 1 }}
+              style={{ padding: "0.3rem 1.2rem 0.7rem 1.2rem", scale: 0.99 }}
+            >
+              <EchoHeading
+                heading={
+                  enabled
+                    ? "Echo will analyze and provide suggestions after you hit send."
+                    : `Need help with this prompt?`
+                }
+                enabled={enabled}
+                toggle={toggle}
+              />
+            </motion.div>
+          </AnimatePresence>
+        )}
       </ThemeProvider>
     );
   }
 
-  
   if (!response && !loading) return;
   const revisedLoading = (
     <motion.div
@@ -108,7 +116,7 @@ export const Echo = ({
           enabled={enabled}
           toggle={toggle}
         />
-        <Typography>{revised}</Typography>
+        <Typography contentEditable>{revised}</Typography>
       </motion.div>
     </ErrorBoundary>
   );
