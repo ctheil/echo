@@ -9,7 +9,7 @@ export const Chat = () => {
   const [workingPrompt, setWorkingPrompt] = useState("");
   const [echoEnabled, setEchoEnabled] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [promptStarted, setPromptStarted] = useState(false)
+  const [promptStarted, setPromptStarted] = useState(false);
   const [conversation, setConversation] = useState<
     {
       role: string;
@@ -19,7 +19,7 @@ export const Chat = () => {
     { role: "user", message: "I need help building a website from scratch." },
     { role: "system", message: "This is a response" },
   ]);
-  console.log("[promptStarted: ]", promptStarted)
+  console.log("[promptStarted: ]", promptStarted);
 
   const handleSubmit = async (data: string) => {
     if (!echoEnabled) {
@@ -65,6 +65,7 @@ export const Chat = () => {
           submitHandler={handleSubmit}
           placeholder="Message ChatGPT..."
           setStarted={setPromptStarted}
+          toggleEcho={() => setEchoEnabled(!echoEnabled)}
         />
       </div>
     </main>

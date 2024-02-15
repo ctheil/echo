@@ -9,6 +9,7 @@ type Props = {
   handleChange: (data: string) => void;
   disabledSubmit: boolean;
   setStarted: (started: boolean) => void;
+  toggleEcho: () => void;
 };
 export const PromptInput = (props: Props) => {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -57,12 +58,18 @@ export const PromptInput = (props: Props) => {
         <CgAttachment size={24} className={classes["prompt__attach--icon"]} />
       </div>
       <textarea
+        tabIndex={0}
         onKeyDown={(e) => {
           // Listen for return and submit
           console.log(e.key === "Enter" && !e.shiftKey);
           if (e.key === "Enter" && !e.shiftKey) {
             ref.current?.blur();
             handleSubmit();
+          }
+          if (e.key === "Tab" && e.shiftKey) {
+            e.preventDefault();
+            props.toggleEcho();
+            ref.current.focus();
           }
         }}
         ref={ref}

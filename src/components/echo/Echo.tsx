@@ -65,7 +65,7 @@ export const Echo = ({
             // whileHover={{ translateY: "1.5rem", scale: 1, opacity: 1 }}
             style={{ padding: "0.3rem 1.2rem 0.7rem 1.2rem", scale: 0.99 }}
           >
-            <EchoHeading heading={ enabled ? "Echo will analyze and provide suggestions after you hit send." : "Need help with this prompt?" } enabled={enabled} toggle={toggle} />
+            <EchoHeading heading={ enabled ? "Echo will analyze and provide suggestions after you hit send." : "Need help with this prompt? (Press tab to enable)" } enabled={enabled} toggle={toggle} />
           </motion.div>
         </AnimatePresence>
         }
