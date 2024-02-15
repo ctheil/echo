@@ -6,10 +6,10 @@ type Props = {
   submitHandler: (data: string) => void;
   placeholder: string;
   className?: string;
-  handleChange: (data: string) => void;
-  disabledSubmit: boolean;
-  setStarted: (started: boolean) => void;
-  toggleEcho: () => void;
+  handleChange?: (data: string) => void;
+  disabledSubmit?: boolean;
+  setStarted?: (started: boolean) => void;
+  toggleEcho?: () => void;
 };
 export const PromptInput = (props: Props) => {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -39,7 +39,9 @@ export const PromptInput = (props: Props) => {
       return props.handleChange(val);
     }
     setValue(val);
-    props.setStarted(!!val);
+    if (props.setStarted) {
+      props.setStarted(!!val);
+    }
 
     val === "" ? setIsDisabled(true) : setIsDisabled(false);
   };
@@ -69,8 +71,12 @@ export const PromptInput = (props: Props) => {
           // Listen for meta/ctrl + K for shortcut
           if ((e.metaKey || e.ctrlKey) && e.key === "k") {
             e.preventDefault();
-            props.toggleEcho();
-            ref.current.focus();
+            if (props.toggleEcho) {
+              props.toggleEcho();
+            }
+            if (ref.current) {
+              ref.current.focus();
+            }
           }
         }}
         ref={ref}

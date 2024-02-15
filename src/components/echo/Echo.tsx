@@ -1,13 +1,7 @@
 import { useState } from "react";
 import { AnalyzedPrompt } from "./AnalyzedPrompt";
 import classes from "./Echo.module.css";
-import {
-  Box,
-  Divider,
-  Skeleton,
-  ThemeProvider,
-  Typography,
-} from "@mui/material";
+import { Divider, Skeleton, ThemeProvider, Typography } from "@mui/material";
 import { Suggestions } from "./Suggestions";
 import { Response } from "../@types/response.interface";
 import { theme } from "../muiPalette";
@@ -16,7 +10,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { EchoHeading } from "./EchoHeading";
 import ErrorBoundary from "../errors/ErrorBoundary";
 import ErrorComponent from "../errors/ErrorComponent";
-import getOS from "../../util/detectOs";
 
 type Props = {
   response: Response[] | null;
@@ -42,7 +35,10 @@ export const Echo = ({
     [key: string]: string;
   }>();
 
-  const submitHandler = async (data: { [key: string]: string }) => {
+  const submitHandler = async (data: { [key: string]: string } | undefined) => {
+    if (!data) {
+      throw new Error("No data to submit");
+    }
     setIsLoading(true);
     setWorkingRevision(data);
     const completionRequest = `Please revise the the provided prompt in the form of JSON and improve it based on the attached clarifications. The JSON is structured so that the original string of the prompt is the key of the object, and the value is the clarification. ${JSON.stringify(
@@ -152,11 +148,11 @@ export const Echo = ({
       exit={{ opacity: 0, height: 1 }}
     >
       <h3 className={classes["echo__heading"]}>Echo</h3>
-      <AnalyzedPrompt response={response} loading={loading} />
+      <AnalyzedPrompt response={response!} loading={loading} />
       <Divider sx={{ borderColor: "#444654" }} />
       <Suggestions
         onSubmit={submitHandler}
-        response={response}
+        response={response!}
         loading={loading}
       />
     </motion.div>

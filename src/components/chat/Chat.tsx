@@ -53,7 +53,7 @@ export const Chat = () => {
           enabled={echoEnabled}
           response={response}
           loading={loading}
-          submitPrompt={sendMessage}
+          sendPrompt={sendMessage}
           refreshResponse={() =>
             workingPrompt
               ? handleSubmit(workingPrompt)
