@@ -9,8 +9,10 @@
   --grey-input-focused: #585863;
   --error-05: #dd524c;
   --error-05-trans: rgba(221, 82, 76, 0.1);
+
+  --primary-500:#0FA47F;
 }
 
-body, #root, main {
-    overflow: hidden;
-}
+/* body, #root, main { */
+/*     overflow: hidden; */
+/* } */

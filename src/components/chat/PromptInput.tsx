@@ -66,7 +66,8 @@ export const PromptInput = (props: Props) => {
             ref.current?.blur();
             handleSubmit();
           }
-          if (e.key === "Tab" && e.shiftKey) {
+          // Listen for meta/ctrl + K for shortcut
+          if ((e.metaKey || e.ctrlKey) && e.key === "k") {
             e.preventDefault();
             props.toggleEcho();
             ref.current.focus();
