@@ -75,19 +75,12 @@
   color: var(--grey-04); /* placeholder-black/50 */
   font-family: sans-serif;
   font-size: 1.1rem;
-  /* dark:placeholder-white/50 - This changes the placeholder color in dark mode */
   padding-left: 10px; /* pl-10 */
-  /* display: table-cell; */
-  /* vertical-align: middle; */
-  /* text-align: justify; */
-  /* white-space: normal; */
   padding-top: 0.875rem;
   padding-bottom: 0.875rem;
   box-sizing: border-box;
-  /* height: 52px; */
   max-height: 44px;
   overflow: hidden;
-  /* line-height: 22px; */
 }
 .prompt__input::placeholder {
     font-size: 6rem;
