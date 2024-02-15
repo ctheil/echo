@@ -3,10 +3,10 @@ import {
   CardContent,
   Tooltip,
   Typography,
-  Divider,
   styled,
   tooltipClasses,
   Box,
+  TooltipProps,
 } from "@mui/material";
 import { Response } from "../@types/response.interface";
 
@@ -23,8 +23,8 @@ type Props = {
   children: JSX.Element;
 };
 
-const CustomTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />
+const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className || "" }} />
 ))({
   [`& .${tooltipClasses.tooltip}`]: {
     padding: 0, // Removes padding

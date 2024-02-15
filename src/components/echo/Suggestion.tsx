@@ -1,4 +1,4 @@
-import { Chip, Divider, Typography } from "@mui/material";
+import { Chip, Divider } from "@mui/material";
 import { Response } from "../@types/response.interface";
 import classes from "./Echo.module.css";
 import { PromptInput } from "../chat/PromptInput";
@@ -6,7 +6,7 @@ import { useState } from "react";
 
 type Props = {
   response: Response;
-  handleSubmit: Function;
+  handleSubmit: (data: string, chunk: string)=> void;
   last: boolean;
 };
 export const Suggestion = ({ response, handleSubmit, last }: Props) => {

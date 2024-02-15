@@ -1,7 +1,6 @@
 const getOS = () => {
   const userAgent = window.navigator.userAgent,
-    platform =
-      window.navigator?.userAgentData.platform || window.navigator.platform,
+    platform = window.navigator.platform,
     macosPlatforms = ["macOS", "Macintosh", "MacIntel", "MacPPC", "Mac68K"],
     windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"],
     iosPlatforms = ["iPhone", "iPad", "iPod"];

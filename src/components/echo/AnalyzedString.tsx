@@ -17,6 +17,10 @@ type Props = {
 export const AnalyzedString = ({ response, color, adversityColor }: Props) => {
   const [hover, setHover] = useState(false);
 
+  // if (!response) {
+  //   return <></>;
+  // }
+
   console.log("STRING", response, color);
 
   return (

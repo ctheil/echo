@@ -1,6 +1,10 @@
 import classes from "./Chat.module.css";
 import { FaArrowUp } from "react-icons/fa";
-export const SubmitButton = ({ disabled, handleSubmit }) => {
+type Props = {
+  disabled: boolean;
+  handleSubmit: () => void;
+};
+export const SubmitButton = ({ disabled, handleSubmit }: Props) => {
   return (
     <button
       onClick={handleSubmit}

@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useState } from "react"
+import React, {  useState } from "react"
 import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Link, TextField, ThemeProvider } from "@mui/material"
 import Storage from "../util/key";
 import { theme } from "./muiPalette";
@@ -19,8 +19,8 @@ export const KeyInputDialog = () => {
             setLoading(true)
                 event.preventDefault(); 
                 const formData = new FormData(event.currentTarget); 
-                const formJSON = Object.fromEntries((formData as any).entries());
-                const key = formJSON.key;
+                const formJSON = Object.fromEntries((formData as FormData).entries());
+                const key = formJSON.key as string;
                 console.log(key)
                 // NOTE: test key
                 const goodKey = await testKey(key);
