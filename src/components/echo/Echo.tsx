@@ -34,6 +34,7 @@ export const Echo = ({
   const [workingRevision, setWorkingRevision] = useState<{
     [key: string]: string;
   }>();
+  console.log("[res]: ", response)
 
   const submitHandler = async (data: { [key: string]: string } | undefined) => {
     if (!data) {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Echo } from "../echo/Echo";
 import { PromptInput } from "./PromptInput";
-import classes from "./chat.module.css";
+import classes from "./Chat.module.css";
 import { submitCompletion, submitPrompt } from "../../util/openAi";
 import { Response } from "../@types/response.interface";
 export const Chat = () => {
