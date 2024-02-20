@@ -34,6 +34,9 @@ export const Echo = ({
   const [workingRevision, setWorkingRevision] = useState<{
     [key: string]: string;
   }>();
+  const [threshold, setThreshold] = useState(50);
+
+  console.log("[threshold]: ", threshold);
 
   const submitHandler = async (data: { [key: string]: string } | undefined) => {
     if (!data) {
@@ -70,6 +73,8 @@ export const Echo = ({
                 }
                 enabled={enabled}
                 toggle={toggle}
+                threshold={threshold}
+                setThreshold={setThreshold}
               />
             </motion.div>
           </AnimatePresence>
@@ -89,6 +94,8 @@ export const Echo = ({
         heading="Echo: Revised Prompt"
         enabled={enabled}
         toggle={toggle}
+        threshold={threshold}
+        setThreshold={setThreshold}
       />
       <Skeleton variant="text" sx={{ fontWeight: 14 }} />
     </motion.div>
@@ -111,6 +118,8 @@ export const Echo = ({
           heading="Echo: Revised Prompt"
           enabled={enabled}
           toggle={toggle}
+          threshold={threshold}
+          setThreshold={setThreshold}
         />
         <Typography contentEditable>{revised}</Typography>
       </motion.div>
@@ -130,13 +139,20 @@ export const Echo = ({
         animate={{ opacity: 1, height: "auto" }}
         exit={{ opacity: 0, height: 1 }}
       >
-        <EchoHeading heading="Echo" enabled={enabled} toggle={toggle} />
+        <EchoHeading
+          heading="Echo"
+          enabled={enabled}
+          toggle={toggle}
+          threshold={threshold}
+          setThreshold={setThreshold}
+        />
         <AnalyzedPrompt response={response!} loading={loading} />
         <Divider sx={{ borderColor: "#444654" }} />
         <Suggestions
           onSubmit={submitHandler}
           response={response!}
           loading={loading}
+          threshold={threshold}
         />
       </motion.div>
     </ErrorBoundary>
