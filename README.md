@@ -4,8 +4,12 @@
 
 ## Running the project in the browser: [Project Echo](https://echo.calebtheil.com)
 The hosted project initially prompts the user for an OpenAI Api Key. This dialog is blocking and does not permit access to the tool without a key, as there is no key stored in the `.env` of the hosted project. 
+
+
 > [!WARNING]
-> The key is stored in local storage, so users are encouraged to either (1) run this project in **incognito** or **private mode** *without browser plugins* where the local storage will be wiped when the window is closed, or (2) only run in a browser with trusted extensions installed.
+> **The OpenAI Api Key is stored in the browser's local storage.**
+> 
+> Users are encouraged to either (1) run this project in **incognito** or **private mode** *without browser plugins* where the local storage will be wiped when the window is closed, or (2) only run in a browser with trusted extensions installed.
 > Extensions have access to local storage, so using a maliscious plugin could ptentially leak your OpenAI Api Key.
 
 ## Running the project locally
