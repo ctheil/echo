@@ -2,6 +2,12 @@
 ## A concept for OpenAI
 [Figma Prototype](https://www.figma.com/file/ceMWXn2T42kmBC2QXPhJOV/Project-Echo?type=design&node-id=0%3A1&mode=design&t=UOPDtamZuPZ29s2N-1)
 
+## Running the project in the browser: [Project Echo](https://echo.calebtheil.com)
+The hosted project initially prompts the user for an OpenAI Api Key. This dialog is blocking and does not permit access to the tool without a key, as there is no key stored in the `.env` of the hosted project. 
+> [!WARNING]
+> The key is stored in local storage, so users are encouraged to either (1) run this project in **incognito** or **private mode** *without browser plugins* where the local storage will be wiped when the window is closed, or (2) only run in a browser with trusted extensions installed.
+> Extensions have access to local storage, so using a maliscious plugin could ptentially leak your OpenAI Api Key.
+
 ## Running the project locally
 Currently, running the project locally requires you to manually add a `.env` file and add your OpenAI Api key into the file before running the project.
 
