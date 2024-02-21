@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme } from "@mui/material/createTheme";
 
 export const theme = createTheme({
     components: {

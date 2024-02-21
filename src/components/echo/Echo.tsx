@@ -170,6 +170,7 @@ export const Echo = ({
         onSubmit={submitHandler}
         response={response!}
         loading={loading}
+        threshold={threshold}
       />
     </motion.div>
   );
