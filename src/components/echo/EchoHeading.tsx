@@ -5,7 +5,6 @@ import { BiHelpCircle, BiSolidHelpCircle } from "react-icons/bi";
 import { EchoTut } from "./EchoTut";
 import getOS from "../../util/detectOs";
 import Settings from "./Settings";
-import { MdOutlineSettings } from "react-icons/md";
 
 type Props = {
   enabled: boolean;

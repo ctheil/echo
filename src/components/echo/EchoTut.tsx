@@ -62,6 +62,7 @@ export const EchoTut = (props: Props) => {
             onSubmit={() => {}}
             response={exampleResponse}
             loading={false}
+            threshold={50}
           />
         </div>
       </DialogContent>
