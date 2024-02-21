@@ -8,11 +8,13 @@ type SuggestionProps = {
   loading: boolean;
   response: Response[];
   onSubmit: (suggestions: { [key: string]: string }) => void;
+  threshold: number;
 };
 export const Suggestions = ({
   response,
   loading,
   onSubmit,
+  threshold,
 }: SuggestionProps) => {
   const [suggestions, setSuggestions] = useState({});
   if (loading) {
@@ -52,10 +54,9 @@ export const Suggestions = ({
   const submitHandler = (data: string, chunk: string) => {
     const out: { [key: string]: string | boolean } = suggestions || {};
 
-
     out[chunk] = data;
     out.hasSuggestions = true;
-    console.log(out)
+    console.log(out);
     return setSuggestions(out);
   };
   const finalizeSubmit = () => {
@@ -66,7 +67,8 @@ export const Suggestions = ({
   return (
     <div className={classes["suggestions"]}>
       {response.map((s: Response, i: number) => {
-        if (s.threshold < 0.4) return;
+        const userThreshold = threshold / 100;
+        if (s.threshold < userThreshold) return;
         return (
           <Suggestion
             key={i}
