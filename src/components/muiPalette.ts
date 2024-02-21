@@ -1,15 +1,15 @@
-import { createTheme } from "@mui/material/createTheme";
+import { createTheme } from "@mui/material";
 
 export const theme = createTheme({
-    components: {
-        MuiDialog: {
-            styleOverrides: {
-                paper: {
-                    backgroundColor: "#343541",
-                    backgroundImage: "none"
-                }
-            }
+  components: {
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: "#343541",
+          backgroundImage: "none",
         },
+      },
+    },
     //     MuiAccordion: {
     //         styleOverrides: {
     //             theme: {
@@ -20,7 +20,7 @@ export const theme = createTheme({
     //             }
     //         }
     //     }
-    },
+  },
   palette: {
     mode: "dark",
     primary: {
@@ -36,14 +36,13 @@ export const theme = createTheme({
   },
 });
 
-  // --grey-01: #343541;
-  // --grey-02: #444654;
-  // --grey-03: #9a9b9f;
-  //
-  // --grey-04: #c5c5d1;
-  //
-  // --grey-input: #4f505a;
-  // --grey-input-focused: #585863;
-  // --error-05: #dd524c;
-  // --error-05-trans: rgba(221, 82, 76, 0.1);
-
+// --grey-01: #343541;
+// --grey-02: #444654;
+// --grey-03: #9a9b9f;
+//
+// --grey-04: #c5c5d1;
+//
+// --grey-input: #4f505a;
+// --grey-input-focused: #585863;
+// --error-05: #dd524c;
+// --error-05-trans: rgba(221, 82, 76, 0.1);
