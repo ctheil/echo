@@ -1,5 +1,6 @@
 # Project Echo
-## A concept for OpenAI
+### A concept for OpenAI
+An idea for leveraging the OpenAI API to act as a prompt-engineer buffer between the LLM and the initial prompt. 
 [Figma Prototype](https://www.figma.com/file/ceMWXn2T42kmBC2QXPhJOV/Project-Echo?type=design&node-id=0%3A1&mode=design&t=UOPDtamZuPZ29s2N-1)
 
 ## Running the project in the browser: [Project Echo](https://echo.calebtheil.com)
